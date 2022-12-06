@@ -4,12 +4,13 @@ public class HomeBanking {
 
     private String username;
     private String password;
-
+    private User user;
     public HomeBanking(){}
 
-    public HomeBanking(String username, String password) {
+    public HomeBanking(String username, String password, User user) {
         this.username = username;
         this.password = password;
+        this.user = user;
     }
 
     public String getUsername() {
@@ -28,11 +29,20 @@ public class HomeBanking {
         this.password = password;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "HomeBanking{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", user=" + user +
                 '}';
     }
 }
