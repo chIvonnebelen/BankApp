@@ -7,6 +7,8 @@ public class User {
     private Integer dni;
     private Integer age;
 
+    private BankAccount account;
+
     public User() {}
 
     public User(String name, String lastName, String email, Integer dni, Integer age) {
@@ -15,6 +17,15 @@ public class User {
         this.email = email;
         this.dni = dni;
         this.age = age;
+    }
+
+    public User(String name, String lastName, String email, Integer dni, Integer age, BankAccount account) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.dni = dni;
+        this.age = age;
+        this.account = account;
     }
 
     public String getName() {
@@ -57,6 +68,14 @@ public class User {
         this.age = age;
     }
 
+    public BankAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(BankAccount account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -65,8 +84,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", dni=" + dni +
                 ", age=" + age +
+                ", account=" + account +
                 '}';
     }
-
-
 }

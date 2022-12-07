@@ -4,15 +4,12 @@ public class DebitCard {
     private String cardNumber;
     private Integer securityCode;
     private String expirationDate;
-    private User user;
-
     public DebitCard() {}
 
-    public DebitCard(String cardNumber, Integer securityCode, String expirationDate, User user) {
+    public DebitCard(String cardNumber, Integer securityCode, String expirationDate) {
         this.cardNumber = cardNumber;
         this.securityCode = securityCode;
         this.expirationDate = expirationDate;
-        this.user = user;
     }
 
     public String getCardNumber() {
@@ -39,21 +36,12 @@ public class DebitCard {
         this.expirationDate = expirationDate;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "DebitCard{" +
                 "cardNumber='" + cardNumber + '\'' +
                 ", securityCode=" + securityCode +
                 ", expirationDate='" + expirationDate + '\'' +
-                ", user=" + user +
                 '}';
     }
 }

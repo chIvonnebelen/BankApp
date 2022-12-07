@@ -5,11 +5,12 @@ import com.bankapp.entity.User;
 import com.bankapp.exception.ExcepValidationDebitCard;
 import com.bankapp.exception.ExcepValidationUser;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DebitCardService {
     Scanner sc = new Scanner(System.in);
-    public void createDebitCard() {
+    public DebitCard createDebitCard(ArrayList<User> customers) {
         DebitCard debitCard = new DebitCard();
 
         String cardnumber = String.valueOf((long) (Math.random() *1000000000+1));
@@ -28,5 +29,7 @@ public class DebitCardService {
         System.out.println("Enter the expiration month of the debit card");
         String expirationDate = sc.nextLine();
         debitCard.setExpirationDate(String.valueOf(Integer.parseInt(expirationDate)));
+
+        return debitCard;
     };
 }

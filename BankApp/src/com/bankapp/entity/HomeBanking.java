@@ -1,7 +1,6 @@
 package com.bankapp.entity;
 
 public class HomeBanking {
-
     private String username;
     private String password;
     private User user;
