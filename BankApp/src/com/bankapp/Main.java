@@ -1,12 +1,12 @@
 package com.bankapp;
-import com.bankapp.service.UnionService;
+import com.bankapp.service.MenuService;
 
 public  class Main {
     public static void main(String[] args) {
 
-        UnionService unionService = new UnionService();
+        MenuService menuService = new MenuService();
 
-        unionService.menu();
+        menuService.menuPrincipal();
 
         }
 

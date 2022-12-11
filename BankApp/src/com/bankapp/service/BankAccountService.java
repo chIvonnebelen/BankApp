@@ -5,33 +5,39 @@ import com.bankapp.entity.User;
 import com.bankapp.exception.ExcepValidationBankAccount;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class BankAccountService {
     Scanner sc = new Scanner(System.in);
     BankAccount bankAccount = new BankAccount();
-    public void menuBanckAccount(ArrayList<User> customers) {   //debit card atraves de bankAccount, mismo de usuario
+    DebitCardService debitCardService = new DebitCardService();
 
-        int numValitor=0;
+    UserService userService = new UserService();
+
+ /*    public void menuBanckAccount(ArrayList<User> customers) {   //debit card atraves de bankAccount, mismo de usuario
+
+        int numValitor = 0;
         System.out.println("Choose one option ");
         System.out.println("--------------------------------");
-        System.out.println("1. First Deposit");
-        System.out.println("2. Enter the Alias");
+        System.out.println("1. Login to bankAccount");
+        System.out.println("2. First Deposit");
         System.out.println("3. Deposit");
         System.out.println("4. Transaction");
         System.out.println("5. Extraction");
+        System.out.println("6. Debit Card");
+        System.out.println("7. Exit");
 
-        numValitor= sc.nextInt();
+        numValitor = sc.nextInt();
         switch (numValitor) {
             case 1:
-                System.out.println("Enter the firs initial deposit ");
-                actualBalance(bankAccount);
+                System.out.println("Welcome to bankAccount");
+               // System.out.println(loginBankAccount(customers));
+                User user = loginBankAccount(customers);
+                user.getAccounts();
                 break;
             case 2:
-                System.out.println("Alias ");
-                cbuValidation(bankAccount);
+                System.out.println("Enter the firs initial deposit ");
+                initialDeposit(bankAccount);
                 break;
             case 3:
-
                 System.out.println("Deposit ");
                 deposit(bankAccount);
                 break;
@@ -46,116 +52,168 @@ public class BankAccountService {
 
                 break;
             case 6:
+                System.out.println("Debit Card");
+                bankAccount.setDebit(debitCardService.createDebitCard(customers));
+                break;
+            case 7:
+                System.out.println("Return to previous menu");
+
+                break;
+
+            case 8:
                 System.out.println("Salir");
+
                 break;
             default:
                 System.out.println("Invalid choice");
                 break;
         }
 
+    }*/
+
+    public User loginBankAccount(ArrayList<User> customers){
+            boolean validator;
+            String username="";
+            User user=new User();
+            do {
+                try {
+                    validator = false;
+                    System.out.println(" Enter the username :");
+                    username = sc.next();
+                    for (User aux : customers) {
+                        if (aux.getUsername().equals(username)) { //para no repetir datos user
+                            System.out.println("username correct");
+                            loginPaswword(aux.getPassword());
+                            System.out.println("Welcome "+ aux.getName());
+                            user=aux;
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    validator=true;
+                    e.printStackTrace();
+                }
+            } while (validator);
+
+            return user;
+    }
+    public void loginPaswword(String passwordUser){
+
+        boolean validator;
+        String password="";
+
+        do {
+            try {
+                validator = false;
+                System.out.println(" Enter the password :");
+                password = sc.next();
+
+                    if (passwordUser.equals(password)) { //para no repetir datos user
+                        System.out.println("-------");
+                    }else{
+                        throw new ExcepValidationBankAccount("Password incorrect invalid, try again");
+                    }
+
+            } catch (Exception e) {
+                validator=true;
+                e.printStackTrace();
+            }
+        } while (validator);
+      //  return password;
     }
     public BankAccount createBankAccount(ArrayList<User> customers){
-        DebitCardService debitCardService= new DebitCardService();
-
-        System.out.println(usernameValidation(customers));
-        passwordValidation(bankAccount);
-        cbuValidation(bankAccount);
         actualBalance(bankAccount);
-        bankAccount.setUsername(usernameValidation(customers));
         deposit(bankAccount);
         transfer(bankAccount);
         extraction(bankAccount);
-
         bankAccount.setDebit(debitCardService.createDebitCard(customers));
-
         return bankAccount;
-    };
-
-    public String usernameValidation(ArrayList<User> clientes) {
-
-        String username= "";
-        Boolean validation;
-
-        System.out.println("Enter the username :");
-
-        do {
-            validation= false;
-            try {
-                username = sc.next();
-                for (User aux : clientes) {
-                    if (aux.getAccount().getUsername().equals(username)) { //para no repetir datos user
-                        validation= true;
-                        System.out.println("The usermane  is already exist, try again: ");
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } while (validation);
-
-
-        return username;
-    }
-    public void passwordValidation(BankAccount bankAccount){
-
-        System.out.println("Enter the password :");
-        String password=sc.nextLine();
-        if (password.equals("")) {
-            throw new ExcepValidationBankAccount("Password can´t be empty");
-        }else if (password.length()!=4){
-            throw new ExcepValidationBankAccount("Password  must be 4 digit ");
-        }else {
-            bankAccount.setPassword(String.valueOf(Integer.parseInt(password)));
-        }
+        //  bankAccount.setMenu(unionService.menu());// chequear
     }
 
     public void cbuValidation(BankAccount bankAccount) {
         System.out.println("Enter you alias : ");
-        try {
-            String cbu = sc.nextLine();
-            if (cbu.equals("")) {
-                throw new ExcepValidationBankAccount("Invalid CBU");
-            }else {
-                bankAccount.setCbu(bankAccount.getCbu());
+        boolean aliasControl=true;
+        do {
+            try {
+                aliasControl=false;
+                String cbu = sc.nextLine();
+                if (cbu.equals("")) {
+                    throw new ExcepValidationBankAccount("Invalid CBU");
+                } else {
+                    bankAccount.setCbu(bankAccount.getCbu());
+                }
+            }catch(Exception e){
+                e.printStackTrace();
             }
+        } while (!aliasControl);
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void initialDeposit(BankAccount bankAccount){
+        boolean depositControl=true;
+        do{
+            try{
+                depositControl=false;
+                System.out.println("Enter the first initial deposit");
+                double firstDeposit = sc.nextDouble();
+                if (firstDeposit >0.0){
+                    bankAccount.setBalance(bankAccount.getBalance()+firstDeposit);
+                    System.out.println("Congratulation of the first deposit" );
+                    System.out.println("Your actual balance is " + bankAccount.getBalance());
+
+                }else{
+                    throw new ExcepValidationBankAccount("Invalid Initial Deposit");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }while (!depositControl);
+
     }
     public void actualBalance(BankAccount bankAccount) {
-        System.out.println("Enter the first initial deposit");
-        bankAccount.setBalance(sc.nextDouble());
+
         if (bankAccount.getBalance() < 0.0) {
             throw new ExcepValidationBankAccount("Insufficient balance");
         }else{
             System.out.println("Your account balance is " + bankAccount.getBalance());
         }
     }
-
-    public void  deposit(BankAccount bankAccount){
+    public void  deposit(BankAccount bankAccount) {
         System.out.println(" Enter the deposit amount");
-        Double newDeposit= sc.nextDouble();
-        bankAccount.setBalance(bankAccount.getBalance()+newDeposit);
-
+        double newDeposit = sc.nextDouble();
+        if (newDeposit > 0.0) {
+            bankAccount.setBalance(bankAccount.getBalance() + newDeposit);
+            System.out.println("You deposit : " + newDeposit);
+            System.out.println("Your actual balance is " + bankAccount.getBalance());
+        } else{
+            throw new ExcepValidationBankAccount("Invalid deposit");
+        }
     }
-    public void transfer(BankAccount bankAccount ){
+
+    public void transfer(BankAccount bankAccount){
         System.out.println("Enter the transfer amount");
-        Double amount= sc.nextDouble();
-        if(amount  > bankAccount.getBalance()){
+
+        double amount= sc.nextDouble();
+        if(amount > bankAccount.getBalance()){
             throw new ExcepValidationBankAccount("Insuficient amount");
         }else{
             bankAccount.setBalance(bankAccount.getBalance()-amount);
+            System.out.println("Successful transfer");
+            System.out.println("Your actual balance : "+ bankAccount.getBalance());
         }
     }
     public void extraction(BankAccount bankAccount){
         System.out.println("Enter the extraction amount");
-        Double amount= sc.nextDouble();
-        if(amount  < bankAccount.getBalance()){
+        double amount= sc.nextDouble();
+        if(amount<0.0 ){
+            throw new ExcepValidationBankAccount("Invalid amount");
+        } else if(amount > bankAccount.getBalance()){
             throw new ExcepValidationBankAccount("Insuficient amount");
     }else {
-            bankAccount.setBalance(bankAccount.getBalance()-amount);}
+            bankAccount.setBalance(bankAccount.getBalance()-amount);
+            System.out.println("Successful extraction");
+            System.out.println("Your actual balance : "+ bankAccount.getBalance());
+        }
+
     }
 }

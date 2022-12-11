@@ -1,54 +1,49 @@
 package com.bankapp.entity;
 
+import com.bankapp.service.MenuService;
 public class BankAccount {
     // private tarjeta de credito; banKA.setdebitcar(dbitServicio.createTarteja); cuando creo
     //usuario.getAccount.getDebitCar();
-    private String username;
-    private String password;
-    private Double balance;
-    private String cbu;
+    private double balance;
+    private int cbu=1000;
+    private User user;
     private DebitCard debit;
-
+    private MenuService menu;
     public BankAccount() {}
-
-    public BankAccount(String username, String password, Double balance, String cbu, DebitCard debit) {
-        this.username = username;
-        this.password = password;
-        this.balance = balance;
-        this.cbu = cbu;
-        this.debit = debit;
+    public BankAccount(User user) {
+        this.user = user;
+        this.balance=0.0;
+        this.cbu++;
     }
 
-    public String getUsername() {
-        return username;
+    public BankAccount(User user, int cbu, double balance) {
+        this.user = user;
+        this.cbu ++;
+        this.balance = 0.0;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Double getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
-    public String getCbu() {
+    public int getCbu() {
         return cbu;
     }
 
-    public void setCbu(String cbu) {
+    public void setCbu(int cbu) {
         this.cbu = cbu;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public DebitCard getDebit() {
@@ -59,14 +54,30 @@ public class BankAccount {
         this.debit = debit;
     }
 
+    public MenuService getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuService menu) {
+        this.menu = menu;
+    }
+
     @Override
     public String toString() {
         return "BankAccount{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", balance=" + balance +
-                ", cbu='" + cbu + '\'' +
+                "balance=" + balance +
+                ", cbu=" + cbu +
+                ", user=" + user +
                 ", debit=" + debit +
+                ", menu=" + menu +
                 '}';
     }
+    /* public BankAccount(double balance, String cbu, DebitCard debit, UnionService menu) {
+        this.balance = balance;
+        this.cbu = cbu;
+        this.debit = debit;
+        this.menu = menu;
+    }*/
+
+
 }

@@ -1,31 +1,39 @@
 package com.bankapp.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String name;
     private String lastName;
     private String email;
     private Integer dni;
     private Integer age;
-
-    private BankAccount account;
+    private String username;
+    private String password;
+    private List<BankAccount> accounts=new ArrayList<BankAccount>();
 
     public User() {}
 
-    public User(String name, String lastName, String email, Integer dni, Integer age) {
+    public User(String name, String lastName, String email, Integer dni, Integer age, String username, String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.dni = dni;
         this.age = age;
+        this.username = username;
+        this.password = password;
     }
 
-    public User(String name, String lastName, String email, Integer dni, Integer age, BankAccount account) {
+    public User(String name, String lastName, String email, Integer dni, Integer age, String username, String password, List<BankAccount> accounts) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.dni = dni;
         this.age = age;
-        this.account = account;
+        this.username = username;
+        this.password = password;
+        this.accounts = accounts;
     }
 
     public String getName() {
@@ -68,12 +76,28 @@ public class User {
         this.age = age;
     }
 
-    public BankAccount getAccount() {
-        return account;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAccount(BankAccount account) {
-        this.account = account;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<BankAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<BankAccount> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
@@ -84,7 +108,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", dni=" + dni +
                 ", age=" + age +
-                ", account=" + account +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", accounts=" + accounts +
                 '}';
     }
 }
