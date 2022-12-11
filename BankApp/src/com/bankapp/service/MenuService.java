@@ -120,12 +120,10 @@ public class MenuService {
 
             case 2:
                 System.out.println("Deposit ");
-                System.out.println("Cuanto quiere depositar");
-                int dep1= sc.nextInt();
-               // bankAccountService.deposit(user.getAccounts().get(0));
-                 for( BankAccount account : user.getAccounts()){
-                System.out.println(account.getCbu()+"-- "+ account.getBalance()+ dep1);
-            }
+               // System.out.println("Cuanto quiere depositar");
+               // int dep1= sc.nextInt();
+                bankAccountService.deposit(user.getAccounts().get(0));
+
 
                 break;
 
